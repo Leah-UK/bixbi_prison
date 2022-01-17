@@ -5,7 +5,7 @@
 
 <h2 align='center'>Information</h2>
 
-A very basic vehicle locking system. By default players part of the ambulance or police job can open any <b>emergency</b> vehicle as if it was their own. You can change this in server.lua and within the '<b>bixbi_vehkeys:CheckKey</b>' event.
+
 
 ---
 
