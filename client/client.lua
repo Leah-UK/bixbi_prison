@@ -29,7 +29,7 @@ AddEventHandler('bixbi_prison:SendToPrison', function(data)
             texture = v.female.texture
         end
 
-        TriggerEvent('bixbi_wardrobe:SetClothing', k, drawable, texture)
+        TriggerEvent('bixbi_core:SetClothing', k, drawable, texture)
     end
 
     Citizen.Wait(2000)
