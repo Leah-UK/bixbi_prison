@@ -3,7 +3,19 @@
 
 ---
 
+<h2 align='center'>Information</h2>
 
+A very basic vehicle locking system. By default players part of the ambulance or police job can open any <b>emergency</b> vehicle as if it was their own. You can change this in server.lua and within the '<b>bixbi_vehkeys:CheckKey</b>' event.
+
+---
+
+<h2 align='center'>Requirements</h2>
+
+- <a href='https://github.com/overextended/es_extended'>"Ox" ESX</a>,<i> You can modify for other frameworks. <b>Please make a PR if you do</b></i>
+- <a href='https://github.com/Leah-UK/bixbi_core'>bixbi_core</a>
+- <a href='https://github.com/overextended/qtarget'>qtarget</a>
+- <a href='https://github.com/zf-development/zf_dialog'>zf_dialog</a>
+- <a href='https://github.com/ZiggyJoJo/brp-fivem-appearance'>brp-fivem-appearance</a> or <a href='https://github.com/pedr0fontoura/fivem-appearance'>fivem-appearance</a> - for clothing.
 
 ---
 
