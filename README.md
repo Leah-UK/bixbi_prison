@@ -5,7 +5,9 @@
 
 <h2 align='center'>Information</h2>
 
+A basic prison script with the ability to break people out of jail. There's checking for jobs and distances to avoid exploits. Performance was a factor during the creation of the script and therefore the amount of client-side loops is kept to the bare minimum, this was done with the help of qtarget.
 
+<h3 align='center'><b><a href='https://youtu.be/sLQaIRR7lX0'>Demonstration Video</a></b></h3>
 
 ---
 
@@ -16,6 +18,7 @@
 - <a href='https://github.com/overextended/qtarget'>qtarget</a>
 - <a href='https://github.com/zf-development/zf_dialog'>zf_dialog</a>
 - <a href='https://github.com/ZiggyJoJo/brp-fivem-appearance'>brp-fivem-appearance</a> or <a href='https://github.com/pedr0fontoura/fivem-appearance'>fivem-appearance</a> - for clothing.
+- <a href='https://github.com/ultrahacx/ultra-voltlab'>ultra-voltlab</a> for prison break minigame.
 
 ---
 

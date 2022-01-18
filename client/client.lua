@@ -223,7 +223,7 @@ function StartHacking()
     TriggerEvent('ultra-voltlab', 60, function(result, reason)
         Citizen.Wait(3000)
         if (result == 1) then
-            TriggerServerEvent('bixbi_core:removeItem', nil, 'usb_prisonbreak', 1)
+            TriggerServerEvent('bixbi_core:removeItem', nil, Config.PrisonBreakItem, 1)
             CaptureBegin()
         else
             exports.bixbi_core:Notify('error', string.upper(reason))

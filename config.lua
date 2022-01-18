@@ -9,6 +9,7 @@ Config.TerminalAccessMinutes = 5 -- How many minutes to give the user access to 
 Config.MaxReleaseCount = 3 -- How many people the criminal can release from jail before losing terminal access.
 Config.HackingTime = 1 -- Minutes. How long it takes to "capture"/hack the terminal.
 Config.MinimumPolice = 3 -- For prison breaks.
+Config.PrisonBreakItem = 'usb_prisonbreak' -- Item needed to break someone from prison.
 
 Config.DiscordURL = ""
 Config.DiscordURL2 = "" -- Used for logging people being released through prison break or manually (officer/government).
