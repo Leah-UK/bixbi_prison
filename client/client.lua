@@ -145,7 +145,7 @@ end)
 RegisterNetEvent('bixbi_prison:GainTerminalAccess')
 AddEventHandler('bixbi_prison:GainTerminalAccess', function(data)
     if (ESX.PlayerData.job.name ~= 'police') then
-        if (exports['bixbi_core']:itemCount('usb_prisonbreak') > 0) then
+        if (exports['bixbi_core']:itemCount('usb_prisonbreak') > 0 and #ESX.GetExtendedPlayers('job', 'police') >= Config.MinimumPolice) then
             StartHacking()
         else
             exports['bixbi_core']:Notify('error', 'You do not have a Prison Break USB.', 10000)
@@ -219,6 +219,7 @@ function StartHacking()
     TriggerServerEvent('bixbi_dispatch:Add', GetPlayerServerId(PlayerId()), 'police', 'prisonbreak', 'There is a prison break in progress!', GetEntityCoords(playerPed))
     TabletAnim()
 
+    -- Credit: https://github.com/ultrahacx/ultra-voltlab 
     TriggerEvent('ultra-voltlab', 60, function(result, reason)
         Citizen.Wait(3000)
         if (result == 1) then
