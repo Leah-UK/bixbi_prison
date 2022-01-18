@@ -18,6 +18,8 @@ AddEventHandler('bixbi_prison:SendToPrison', function(data)
 
     DoScreenFadeOut(2000)
 
+    if (Config.OxInventory) then TriggerEvent('ox_inventory:disarm') end
+    
     local sex = 0
     if (exports['fivem-appearance']:getPedModel(playerPed) == 'mp_f_freemode_01') then sex = 1 end
 
@@ -242,7 +244,6 @@ function TabletAnim(endAnim)
         RequestModel(tabletProp)
         while not HasAnimDictLoaded(animDict) or not HasModelLoaded(tabletProp) do Citizen.Wait(100) end
         tabletObject = CreateObject(GetHashKey(tabletProp), 0.0, 0.0, 0.0, true, true, false)
-        print(tabletObject)
         AttachEntityToEntity(tabletObject, playerPed, GetPedBoneIndex(playerPed, 60309), 0.03, 0.002, -0.0, 10.0, 160.0, 0.0, true, false, false, false, 2, true)
         SetModelAsNoLongerNeeded(tabletProp)
         TaskPlayAnim(playerPed, animDict, "base" , 3.0, 3.0, -1, 49, 0, 0, 0, 0)

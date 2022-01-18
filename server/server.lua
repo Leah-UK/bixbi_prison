@@ -73,10 +73,10 @@ end)
 
 RegisterServerEvent('bixbi_prison:UnJailPlayer')
 AddEventHandler('bixbi_prison:UnJailPlayer', function(targetId, automatic, src)
-	if (src == nil) then src = source end
+    if (src == nil) then src = source end
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local xTarget = ESX.GetPlayerFromId(targetId)
-	if (xPlayer == nil or xTarget == nil) then return end
+	if ((xPlayer == nil and not automatic) or xTarget == nil) then return end
 
 	if (_ArrestedPlayers[xTarget.playerId] ~= nil) then
 		_ArrestedPlayers[xTarget.playerId].time = 0
@@ -92,7 +92,7 @@ AddEventHandler('bixbi_prison:UnJailPlayer', function(targetId, automatic, src)
 		_ArrestedPlayers[xTarget.playerId] = nil
 
 		TriggerClientEvent('bixbi_core:Notify', xTarget.playerId, 'success', 'You have been released from prison', 10000)
-		TriggerClientEvent('bixbi_core:Notify', xPlayer.playerId, '', 'You have released ' .. xTarget.name .. ' from prison', 10000)
+		if (xPlayer ~= nil) then TriggerClientEvent('bixbi_core:Notify', xPlayer.playerId, '', 'You have released ' .. xTarget.name .. ' from prison', 10000) end
 
 		exports.oxmysql:execute('UPDATE users SET bixbi_prison = @bixbi_prison WHERE identifier = @identifier', {		
 			['@identifier'] = xTarget.identifier,
@@ -122,7 +122,7 @@ AddEventHandler('esx:playerLoaded', function(source, xPlayer)
 		local info = json.decode(result)
 		if (info.time > 0) then
 			TriggerClientEvent('bixbi_prison:SendToPrison', xPlayer.playerId, {time = info.time, reason = info.reason, officer = info.officer})
-			_ArrestedPlayers[xPlayer.playerId] = {time = tonumber(info.time), identifier = xPlayer.getIdentifier(), reason = info.reason, officer = info.officer, prisoner = xPlayer.name}
+			_ArrestedPlayers[xPlayer.playerId] = {pid = xPlayer.playerId, time = tonumber(info.time), identifier = xPlayer.getIdentifier(), reason = info.reason, officer = info.officer, prisoner = xPlayer.name}
 			-- table.insert(_ArrestedPlayers, _ArrestedPlayers[xPlayer.playerId])
 		end
 	end)
@@ -144,8 +144,9 @@ Citizen.CreateThread(function()
 
 					if (prisoner.time < 1) then
 						TriggerEvent('bixbi_prison:UnJailPlayer', prisoner.pid, true) 
-					else
+                    else
 						local xPlayer = ESX.GetPlayerFromId(prisoner.pid)
+                        print(xPlayer)
 						local coords = xPlayer.getCoords(true)
 						local distance = #(coords - Config.PrisonLocation)
 						TriggerClientEvent('bixbi_prison:DistanceCheck', prisoner.pid, distance)
@@ -154,7 +155,7 @@ Citizen.CreateThread(function()
 			end
 			Citizen.Wait(1 * 60000)
 		else
-			Citizen.Wait(2 * 60000)
+			Citizen.Wait(2 * 60000) -- A bit longer for performance reasons. No point checking every minute if the prison is empty.
 		end
 	end
 end)
