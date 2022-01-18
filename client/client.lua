@@ -125,6 +125,25 @@ function Setup()
         distance = 3.0
     })
 
+    
+    exports['qtarget']:Player({
+        options = {
+            {
+                event = "bixbi_prison:Prison",
+                icon = "fas fa-house-user",
+                label = "[PD] Prison",
+                job = "police",
+                canInteract = function(entity)
+                    if IsPedAPlayer(entity) then
+                        local targetId = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity))
+                        return (Player(targetId).state.handcuffed and not IsPedDeadOrDying(entity, 1))
+                    end
+                end
+            },
+        },
+        distance = 2.0
+    })
+
     local blip = AddBlipForCoord(Config.PrisonLocation)
     SetBlipSprite (blip, 188)
     SetBlipDisplay(blip, 6)
@@ -136,6 +155,26 @@ function Setup()
     AddTextComponentSubstringPlayerName('HMP Los Santos')
     EndTextCommandSetBlipName(blip)
 end
+
+AddEventHandler('bixbi_prison:Prison', function(data)
+    local dialog = exports['zf_dialog']:DialogInput({
+        header = "Send to Prison", 
+        rows = {
+            {
+                id = 0, 
+                txt = "Length (1 = 1 Minute)"
+            },
+            {
+                id = 1, 
+                txt = "Reason"
+            }
+        }
+    })
+    if dialog ~= nil then
+        if dialog[1].input == nil or dialog[2].input == nil then return end
+        TriggerServerEvent('bixbi_prison:JailPlayer', GetPlayerServerId(PlayerId()), GetPlayerServerId(NetworkGetPlayerIndexFromPed(data.entity)), dialog[1].input, dialog[2].input)
+    end
+end)
 
 RegisterNetEvent('bixbi_prison:ImprisonmentInformation')
 AddEventHandler('bixbi_prison:ImprisonmentInformation', function(data)
