@@ -11,6 +11,10 @@ Config.HackingTime = 1 -- Minutes. How long it takes to "capture"/hack the termi
 Config.MinimumPolice = 3 -- For prison breaks.
 Config.PrisonBreakItem = 'usb_prisonbreak' -- Item needed to break someone from prison.
 
+Config.PrisonName = 'HM Prison Service'
+Config.BlipName = 'HMP Los Santos'
+Config.PrisonTag = '[HMPS] ' -- I'd leave a space for formatting reasons :)
+
 Config.DiscordURL = ""
 Config.DiscordURL2 = "" -- Used for logging people being released through prison break or manually (officer/government).
 

@@ -152,7 +152,7 @@ function Setup()
     SetBlipAsShortRange(blip, true)
 
     BeginTextCommandSetBlipName('STRING')
-    AddTextComponentSubstringPlayerName('HMP Los Santos')
+    AddTextComponentSubstringPlayerName(Config.BlipName)
     EndTextCommandSetBlipName(blip)
 end
 

@@ -51,13 +51,14 @@ AddEventHandler('bixbi_prison:JailPlayer', function(source, targetId, timeInput,
 
 		local chatMessage = ' ' .. xTarget.name .. " | " .. time .. " months | " .. reason .. ' - [' .. xPlayer.job.grade_label .. '] ' .. xPlayer.name
 		for _, v in pairs(ESX.GetExtendedPlayers('job', 'police')) do
-			TriggerClientEvent('chatMessage', v.playerId, '[HMPS]', { 255, 0, 0 }, chatMessage)
+			TriggerClientEvent('chatMessage', v.playerId, Config.PrisonTag, { 255, 0, 0 }, chatMessage)
 		end
 		
 		SendDiscordLog("\n\nIndividual: **" .. xTarget.name .. "**\nOfficer: **" .. xPlayer.name .. "**\n\n**Reason:** " .. reason .. "\nLength: **" .. time .. "** month(s)", Config.DiscordURL)
 
 		if (Config.OxInventory) then
-			TriggerEvent('ox_inventory:clearPlayerInventory', xTarget)
+			-- TriggerEvent('ox_inventory:clearPlayerInventory', xTarget)
+            exports.ox_inventory:ClearInventory(xTarget.playerId)
 			for k, v in pairs(Config.Items) do
 				if (k == 'identification') then
 					xTarget.triggerEvent('qidentification:GiveLicense', k)
@@ -83,7 +84,7 @@ AddEventHandler('bixbi_prison:UnJailPlayer', function(targetId, automatic, src)
 		TriggerClientEvent('bixbi_prison:ReleaseFromPrison', xTarget.playerId)
 
 		if (xPlayer ~= nil and xPlayer.job.name ~= 'police' and not automatic) then 
-			TriggerClientEvent('chatMessage', -1, '[HMPS]', { 255, 0, 0 }, ' ' .. xTarget.name .. ' has broken out of prison, and is now a wanted suspect!') 
+			TriggerClientEvent('chatMessage', -1, Config.PrisonTag, { 255, 0, 0 }, ' ' .. xTarget.name .. ' has broken out of prison, and is now a wanted suspect!') 
 			TriggerEvent('bixbi_dispatch:Add', 0, 'police', 'prisonbreak', xTarget.name .. ' has broken out of prison.')
             SendDiscordLog('**' .. xTarget.name .. '** [' .. xTarget.playerId .. '] was **illegally** released from prison by **' .. xPlayer.name .. '** [' .. xPlayer.playerId .. ']', Config.DiscordURL2)
 		elseif (xPlayer ~= nil and xPlayer.job.name == 'police' and not automatic) then
@@ -171,13 +172,13 @@ function SendDiscordLog(message, discordURL)
     if (discordURL == nil or discordURL == "" or message == "") then return end
     local embeds = {
         {
-            ["title"]= 'HM Prison Service',
+            ["title"]= Config.PrisonName,
             ["description"]= message,
             ["type"]= "rich",
             ["color"] = 16711680,
         }
     }
-    PerformHttpRequest(discordURL, function(err, text, headers) end, 'POST', json.encode({ username = 'HM Prison Service', embeds = embeds}), { ['Content-Type'] = 'application/json' })
+    PerformHttpRequest(discordURL, function(err, text, headers) end, 'POST', json.encode({ username = Config.PrisonName, embeds = embeds}), { ['Content-Type'] = 'application/json' })
 end
 
 AddEventHandler('esx:playerDropped', function(playerId, reason)

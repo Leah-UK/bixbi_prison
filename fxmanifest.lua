@@ -4,7 +4,7 @@ Creation Date:	22/06/2021
 fx_version 'cerulean'
 game 'gta5'
 author 'Leah#0001'
-version '1.0.4'
+version '1.0.5'
 versioncheck 'https://raw.githubusercontent.com/Leah-UK/bixbi_prison/main/fxmanifest.lua'
 
 shared_scripts {
