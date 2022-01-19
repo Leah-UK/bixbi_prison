@@ -1,9 +1,9 @@
 Config = {}
 
-Config.PrisonLocation = vector3(1755.32, 2604.94, 45.56)
-Config.ReleaseLocation = vector3(1850.52, 2585.83, 45.67)
-Config.TerminalLocation = vector3(1758.71, 2611.75, 45.56)
-Config.PrisonInfo = vector3(1758.58, 2613.45, 45.56)
+Config.PrisonLocation = vector3(1755.32, 2604.94, 45.56) -- Where you're teleported to when sent to prison.
+Config.ReleaseLocation = vector3(1850.52, 2585.83, 45.67) -- Where you're teleported to when you're released from prison.
+Config.TerminalLocation = vector3(1758.71, 2611.75, 45.56) -- Hacking terminal / release from prison terminal. Make sure to edit the qtarget positions in client.lua
+Config.PrisonInfo = vector3(1758.58, 2613.45, 45.56) -- How long you have left / info terminal. Make sure you edit the qtarget positions in client.lua
 
 Config.TerminalAccessMinutes = 5 -- How many minutes to give the user access to the terminal.
 Config.MaxReleaseCount = 3 -- How many people the criminal can release from jail before losing terminal access.
@@ -15,7 +15,7 @@ Config.PrisonName = 'HM Prison Service'
 Config.BlipName = 'HMP Los Santos'
 Config.PrisonTag = '[HMPS]'
 
-Config.DiscordURL = ""
+Config.DiscordURL = "" -- Used for logging people sent to prison.
 Config.DiscordURL2 = "" -- Used for logging people being released through prison break or manually (officer/government).
 
 Config.Uniform = {
