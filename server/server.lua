@@ -161,7 +161,7 @@ Citizen.CreateThread(function()
 end)
 
 function SendDiscordLog(message, discordURL)
-    if (discordURL == "" or message == "") then return end
+    if (discordURL == nil or discordURL == "" or message == "") then return end
     local embeds = {
         {
             ["title"]= 'HM Prison Service',
@@ -170,9 +170,6 @@ function SendDiscordLog(message, discordURL)
             ["color"] = 16711680,
         }
     }
-
-    if (message == nil or message == '') then return FALSE end
-    if (discordURL == nil or discordURL == "") then return FALSE end
     PerformHttpRequest(discordURL, function(err, text, headers) end, 'POST', json.encode({ username = 'HM Prison Service', embeds = embeds}), { ['Content-Type'] = 'application/json' })
 end
 
