@@ -184,12 +184,18 @@ end)
 RegisterNetEvent('bixbi_prison:GainTerminalAccess')
 AddEventHandler('bixbi_prison:GainTerminalAccess', function(data)
     if (ESX.PlayerData.job.name ~= 'police') then
-        -- if (exports['bixbi_core']:itemCount('usb_prisonbreak') > 0 and #ESX.GetExtendedPlayers('job', 'police') >= Config.MinimumPolice) then
-        if (exports['bixbi_core']:itemCount('usb_prisonbreak') > 0) then
-            StartHacking()
-        else
-            exports['bixbi_core']:Notify('error', 'You do not have a Prison Break USB.', 10000)
-        end
+        ESX.TriggerServerCallback('bixbi_prison:jobCount', function(result)
+            if (not result) then
+                exports['bixbi_core']:Notify('error', 'There\'s not enough police online.')
+                return
+            end
+
+            if (exports['bixbi_core']:itemCount('usb_prisonbreak') > 0) then
+                StartHacking()
+            else
+                exports['bixbi_core']:Notify('error', 'You do not have a Prison Break USB.', 10000)
+            end
+        end)
     else
         TerminalAccessLoop()
     end

@@ -115,6 +115,14 @@ AddEventHandler('bixbi_prison:ServerPrisonerInfo', function()
 	end
 end)
 
+ESX.RegisterServerCallback('bixbi_prison:jobCount', function(source, cb)
+    if (#ESX.GetExtendedPlayers('job', 'police') >= Config.MinimumPolice) then
+        cb(true)
+    else
+        cb(false)
+    end
+end)
+
 AddEventHandler('esx:playerLoaded', function(source, xPlayer)
 	Citizen.Wait(5000)
 	exports.oxmysql:scalar('SELECT bixbi_prison FROM users WHERE identifier = ?', { xPlayer.identifier }, 
@@ -146,7 +154,6 @@ Citizen.CreateThread(function()
 						TriggerEvent('bixbi_prison:UnJailPlayer', prisoner.pid, true) 
                     else
 						local xPlayer = ESX.GetPlayerFromId(prisoner.pid)
-                        print(xPlayer)
 						local coords = xPlayer.getCoords(true)
 						local distance = #(coords - Config.PrisonLocation)
 						TriggerClientEvent('bixbi_prison:DistanceCheck', prisoner.pid, distance)
