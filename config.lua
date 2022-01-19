@@ -13,7 +13,7 @@ Config.PrisonBreakItem = 'usb_prisonbreak' -- Item needed to break someone from 
 
 Config.PrisonName = 'HM Prison Service'
 Config.BlipName = 'HMP Los Santos'
-Config.PrisonTag = '[HMPS] ' -- I'd leave a space for formatting reasons :)
+Config.PrisonTag = '[HMPS]'
 
 Config.DiscordURL = ""
 Config.DiscordURL2 = "" -- Used for logging people being released through prison break or manually (officer/government).
