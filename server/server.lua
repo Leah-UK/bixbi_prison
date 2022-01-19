@@ -15,7 +15,7 @@ ESX.RegisterCommand('unprison', 'admin', function(xPlayer, args, showError)
 
 	local xTarget = ESX.GetPlayerFromId(args.target)
 	SendDiscordLog("\n\nIndividual: **" .. xTarget.name .. "**\n\n*Released by Government*", Config.DiscordURL2)
-	TriggerEvent('bixbi_logging:customLog', 'HM Prison Service', 16711680, Config.DiscordURL2, '**' .. xTarget.name .. '** [' .. xTarget.playerId .. '] was released from prison by **' .. xPlayer.name .. '** [' .. xPlayer.playerId .. '] - *ADMIN COMMAND*.')
+	-- TriggerEvent('bixbi_logging:customLog', 'HM Prison Service', 16711680, Config.DiscordURL2, '**' .. xTarget.name .. '** [' .. xTarget.playerId .. '] was released from prison by **' .. xPlayer.name .. '** [' .. xPlayer.playerId .. '] - *ADMIN COMMAND*.')
 end, true, {help = 'Release player from prison.', validate = false, arguments = {
 	{name = 'target', help = 'Player ID', type = 'any'}
 }})
@@ -85,9 +85,9 @@ AddEventHandler('bixbi_prison:UnJailPlayer', function(targetId, automatic, src)
 		if (xPlayer ~= nil and xPlayer.job.name ~= 'police' and not automatic) then 
 			TriggerClientEvent('chatMessage', -1, '[HMPS]', { 255, 0, 0 }, ' ' .. xTarget.name .. ' has broken out of prison, and is now a wanted suspect!') 
 			TriggerEvent('bixbi_dispatch:Add', 0, 'police', 'prisonbreak', xTarget.name .. ' has broken out of prison.')
-			TriggerEvent('bixbi_logging:customLog', 'HM Prison Service', 16711680, Config.DiscordURL2, '**' .. xTarget.name .. '** [' .. xTarget.playerId .. '] was **illegally** released from prison by **' .. xPlayer.name .. '** [' .. xPlayer.playerId .. ']')
+            SendDiscordLog('**' .. xTarget.name .. '** [' .. xTarget.playerId .. '] was **illegally** released from prison by **' .. xPlayer.name .. '** [' .. xPlayer.playerId .. ']', Config.DiscordURL2)
 		elseif (xPlayer ~= nil and xPlayer.job.name == 'police' and not automatic) then
-			TriggerEvent('bixbi_logging:customLog', 'HM Prison Service', 16711680, Config.DiscordURL2, '**' .. xTarget.name .. '** [' .. xTarget.playerId .. '] was **legally** released from prison by **' .. xPlayer.name .. '** [' .. xPlayer.playerId .. ']')
+            SendDiscordLog('**' .. xTarget.name .. '** [' .. xTarget.playerId .. '] was **legally** released from prison by **' .. xPlayer.name .. '** [' .. xPlayer.playerId .. ']', Config.DiscordURL2)
 		end
 		_ArrestedPlayers[xTarget.playerId] = nil
 
