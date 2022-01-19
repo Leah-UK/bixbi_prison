@@ -14,7 +14,7 @@ ESX.RegisterCommand('unprison', 'admin', function(xPlayer, args, showError)
 	TriggerEvent('bixbi_prison:UnJailPlayer', args.target, true, xPlayer.playerId)
 
 	local xTarget = ESX.GetPlayerFromId(args.target)
-	SendDiscordLog("\n\nIndividual: **" .. xTarget.name .. "**\n\n*Released by Government*")
+	SendDiscordLog("\n\nIndividual: **" .. xTarget.name .. "**\n\n*Released by Government*", Config.DiscordURL2)
 	TriggerEvent('bixbi_logging:customLog', 'HM Prison Service', 16711680, Config.DiscordURL2, '**' .. xTarget.name .. '** [' .. xTarget.playerId .. '] was released from prison by **' .. xPlayer.name .. '** [' .. xPlayer.playerId .. '] - *ADMIN COMMAND*.')
 end, true, {help = 'Release player from prison.', validate = false, arguments = {
 	{name = 'target', help = 'Player ID', type = 'any'}
@@ -54,7 +54,7 @@ AddEventHandler('bixbi_prison:JailPlayer', function(source, targetId, timeInput,
 			TriggerClientEvent('chatMessage', v.playerId, '[HMPS]', { 255, 0, 0 }, chatMessage)
 		end
 		
-		SendDiscordLog("\n\nIndividual: **" .. xTarget.name .. "**\nOfficer: **" .. xPlayer.name .. "**\n\n**Reason:** " .. reason .. "\nLength: **" .. time .. "** month(s)")
+		SendDiscordLog("\n\nIndividual: **" .. xTarget.name .. "**\nOfficer: **" .. xPlayer.name .. "**\n\n**Reason:** " .. reason .. "\nLength: **" .. time .. "** month(s)", Config.DiscordURL)
 
 		if (Config.OxInventory) then
 			TriggerEvent('ox_inventory:clearPlayerInventory', xTarget)
@@ -160,9 +160,20 @@ Citizen.CreateThread(function()
 	end
 end)
 
-function SendDiscordLog(message)
-    if (Config.DiscordURL == "" or message == "") then return end
-    TriggerEvent('bixbi_logging:customLog', 'HM Prison Service', 16711680, Config.DiscordURL, message)
+function SendDiscordLog(message, discordURL)
+    if (discordURL == "" or message == "") then return end
+    local embeds = {
+        {
+            ["title"]= 'HM Prison Service',
+            ["description"]= message,
+            ["type"]= "rich",
+            ["color"] = 16711680,
+        }
+    }
+
+    if (message == nil or message == '') then return FALSE end
+    if (discordURL == nil or discordURL == "") then return FALSE end
+    PerformHttpRequest(discordURL, function(err, text, headers) end, 'POST', json.encode({ username = 'HM Prison Service', embeds = embeds}), { ['Content-Type'] = 'application/json' })
 end
 
 AddEventHandler('esx:playerDropped', function(playerId, reason)

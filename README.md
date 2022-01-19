@@ -7,7 +7,7 @@
 
 A basic prison script with the ability to break people out of jail. There's checking for jobs and distances to avoid exploits. Performance was a factor during the creation of the script and therefore the amount of client-side loops is kept to the bare minimum, this was done with the help of qtarget.
 
-<h3 align='center'><b><a href='https://youtu.be/sLQaIRR7lX0'>Demonstration Video</a></b></h3>
+<h3 align='center'><b><a href='https://youtu.be/zNfPfcoPcrU'>Demonstration Video</a></b></h3>
 
 ---
 
