@@ -97,7 +97,7 @@ function Setup()
                 event = "bixbi_prison:GainTerminalAccess",
                 icon = "fas fa-lock",
                 label = "Gain Terminal Access",
-                item = "usb_prisonbreak",
+                item = Config.PrisonBreakItem,
             },
             {
                 event = "bixbi_prison:TerminalMenu",
