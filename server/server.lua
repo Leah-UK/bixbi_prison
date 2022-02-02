@@ -133,7 +133,7 @@ Citizen.CreateThread(function()
 	while true do
 		if (_ArrestedPlayers ~= nil and #_ArrestedPlayers > 0) then
 			for _, prisoner in pairs(_ArrestedPlayers) do
-				if (prisoner ~= nil) then
+				if (prisoner ~= nil and prisoner ~= false) then
 					prisoner.time = prisoner.time - 1
 					if (prisoner.time < 0) then prisoner.time = 0 end
 					local UpdateInfo = {time = prisoner.time, reason = prisoner.reason, officer = prisoner.officer}
