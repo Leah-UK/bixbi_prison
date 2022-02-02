@@ -37,7 +37,7 @@ AddEventHandler('bixbi_prison:JailPlayer', function(source, targetId, timeInput,
 		return
 	end
 
-	if (_ArrestedPlayers[xTarget.playerId] == nil) then
+	if (_ArrestedPlayers[xTarget.playerId] == nil or _ArrestedPlayers[xTarget.playerId] == false) then
 		local time = tonumber(timeInput)
 		local newJail = {time = time, reason = reason, officer = xPlayer.name}
 		exports.oxmysql:execute('UPDATE users SET bixbi_prison = @bixbi_prison WHERE identifier = @identifier', {		
@@ -79,7 +79,7 @@ AddEventHandler('bixbi_prison:UnJailPlayer', function(targetId, automatic, src)
 	local xTarget = ESX.GetPlayerFromId(targetId)
 	if ((xPlayer == nil and not automatic) or xTarget == nil) then return end
 
-	if (_ArrestedPlayers[xTarget.playerId] ~= nil) then
+	if (_ArrestedPlayers[xTarget.playerId] ~= nil and _ArrestedPlayers[xTarget.playerId] ~= false) then
 		_ArrestedPlayers[xTarget.playerId].time = 0
 		TriggerClientEvent('bixbi_prison:ReleaseFromPrison', xTarget.playerId)
 
@@ -90,7 +90,7 @@ AddEventHandler('bixbi_prison:UnJailPlayer', function(targetId, automatic, src)
 		elseif (xPlayer ~= nil and xPlayer.job.name == 'police' and not automatic) then
             SendDiscordLog('**' .. xTarget.name .. '** [' .. xTarget.playerId .. '] was **legally** released from prison by **' .. xPlayer.name .. '** [' .. xPlayer.playerId .. ']', Config.DiscordURL2)
 		end
-		_ArrestedPlayers[xTarget.playerId] = nil
+		_ArrestedPlayers[xTarget.playerId] = false
 
 		TriggerClientEvent('bixbi_core:Notify', xTarget.playerId, 'success', 'You have been released from prison', 10000)
 		if (xPlayer ~= nil) then TriggerClientEvent('bixbi_core:Notify', xPlayer.playerId, '', 'You have released ' .. xTarget.name .. ' from prison', 10000) end
@@ -106,7 +106,7 @@ end)
 
 RegisterServerEvent('bixbi_prison:ServerPrisonerInfo')
 AddEventHandler('bixbi_prison:ServerPrisonerInfo', function()
-	if (_ArrestedPlayers[source] ~= nil) then
+	if (_ArrestedPlayers[source] ~= nil and _ArrestedPlayers[source] ~= false) then
 		local info = _ArrestedPlayers[source]
 		TriggerClientEvent('bixbi_core:Notify', source, 'error', 'You have: ' .. info.time .. ' month(s) left in prison', 10000)
 		TriggerClientEvent('bixbi_core:Notify', source, 'error', 'Reason for Imprisonment: ' .. info.reason)
@@ -174,7 +174,7 @@ function SendDiscordLog(message, discordURL)
 end
 
 AddEventHandler('esx:playerDropped', function(playerId, reason)
-	_ArrestedPlayers[playerId] = nil
+	_ArrestedPlayers[playerId] = false
 end)
 
 AddEventHandler('onResourceStart', function(resourceName)
